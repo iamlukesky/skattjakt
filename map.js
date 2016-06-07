@@ -29,7 +29,12 @@ var MyControl = L.Control.extend({
 
 map.addControl(new MyControl());
 
-map.locate({setView: true, maxZoom: 16});
+map.locate({
+    setView: true,
+    maxZoom: 16,
+    watch: true,
+    enableHighAccuracy: true
+});
 
 function onLocationFound(e){
 	var radius = e.accuracy / 2;
