@@ -28,3 +28,22 @@ var MyControl = L.Control.extend({
 });
 
 map.addControl(new MyControl());
+
+map.locate({setView: true, maxZoom: 16});
+
+function onLocationFound(e){
+	var radius = e.accuracy / 2;
+
+	L.marker(e.latlng).addTo(map)
+		.bindPopup("Du är inom " + radius + " meter från den här platsen").openPopup();
+
+	L.circle(e.latlng, radius).addTo(map);
+}
+
+map.on('locationfound', onLocationFound);
+
+function onLocationError(e) {
+    alert(e.message);
+}
+
+map.on('locationerror', onLocationError);
