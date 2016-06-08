@@ -52,10 +52,17 @@ map.locate({
     enableHighAccuracy: true
 });
 
+
+var playerPos = L.circle(map.getCenter(), 10).addTo(map);
+
+var targetMet = false;
+
 function onLocationFound(e){
 	var radius = e.accuracy / 2;
 
-	L.marker(e.latlng).addTo(map)
+	playerPos
+        .setLatLng(e.latlng)
+        .setRadius(radius)
 		.bindPopup("Du är inom " + radius + " meter från den här platsen").openPopup();
 
     console.log(e.latlng.lat);
@@ -63,8 +70,9 @@ function onLocationFound(e){
 	L.circle(e.latlng, radius).addTo(map);
 
 
-    if(e.latlng.distanceTo(controlPoint1) < 100){
+    if(!targetMet && playerPos.getLatLng().distanceTo(controlPoint1) < 100){
         alert("Du närmar dig målet!");
+        targetMet = true;
     }
 }
 
@@ -83,6 +91,17 @@ var mousemarker = L.circle(map.getCenter(), 10).addTo(map);
 map.on('mousemove', function(e){
     mousemarker.setLatLng(e.latlng);//.update();
     if(e.latlng.distanceTo(controlPoint1) < 100){
-        alert("Du närmar dig målet!");
+        mousemarker.setStyle({
+            color: "Chartreuse",
+            fillColor: "DarkGreen",
+            opacity: 1
+        });
+    }
+    else{
+        mousemarker.setStyle({
+            color: "blue",
+            fillColor: "blue",
+            opacity: 0.5
+        })
     }
 });
