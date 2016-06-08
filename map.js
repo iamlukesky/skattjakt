@@ -2,9 +2,6 @@
 
 
 
-var controlPoint1 = L.latLng(59.309892, 18.075331);//59.309892, 18.075331 //skanstull (gunnarssons)
-
-
 var map = L.map("map", {
         center: [59.4124215,18.3599117],
         zoom: 13
@@ -38,8 +35,8 @@ var MyControl = L.Control.extend({
 map.addControl(new MyControl());
 
 
-
-L.marker(controlPoint1)
+var target = L.latLng(59.309892, 18.075331);//59.309892, 18.075331 //skanstull (gunnarssons)
+L.marker(target)
     .addTo(map);
 
 
@@ -70,7 +67,7 @@ function onLocationFound(e){
 	L.circle(e.latlng, radius).addTo(map);
 
 
-    if(!targetMet && playerPos.getLatLng().distanceTo(controlPoint1) < 100){
+    if(!targetMet && playerPos.getLatLng().distanceTo(target) < 100){
         alert("Du närmar dig målet!");
         targetMet = true;
     }
@@ -90,7 +87,7 @@ var mousemarker = L.circle(map.getCenter(), 10).addTo(map);
 
 map.on('mousemove', function(e){
     mousemarker.setLatLng(e.latlng);//.update();
-    if(e.latlng.distanceTo(controlPoint1) < 100){
+    if(e.latlng.distanceTo(target) < 100){
         mousemarker.setStyle({
             color: "Chartreuse",
             fillColor: "DarkGreen",
