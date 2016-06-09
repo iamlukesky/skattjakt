@@ -88,6 +88,12 @@ var mousemarker = L.circle(map.getCenter(), 10).addTo(map);
 map.on('mousemove', function(e){
     mousemarker.setLatLng(e.latlng);//.update();
     if(e.latlng.distanceTo(target) < 100){
+      if(!targetMet){
+        map.fire('modal', {
+          content: '<h1>Modal header</h1>' + (new Array(100)).join('<p>Content line</p>')
+        });
+        targetMet = true;
+      }
         mousemarker.setStyle({
             color: "Chartreuse",
             fillColor: "DarkGreen",
@@ -109,30 +115,6 @@ map.on('mousemove', function(e){
 //Leaflet modal example code
 L.DomEvent
   .on(document.querySelector('.open-modal'), 'click', function(){
-    //console.log("click!"); Funkar. Så anledningen till att den inte visar något är nåt annat.
-    // map.fire('modal', {
-
-    //   content: 'your content HTML',        // HTML string
-
-    //   closeTitle: 'close',                 // alt title of the close button
-    //   zIndex: 10000,                       // needs to stay on top of the things
-    //   transitionDuration: 300,             // expected transition duration
-
-    //   template: '{content}',               // modal body template, this doesn't include close button and wrappers
-
-    //   // callbacks for convenience,
-    //   // you can set up you handlers here for the contents
-    //   onShow: function(evt){ var modal = evt.modal;},
-    //   onHide: function(evt){ var modal = evt.modal;},
-
-    //   // change at your own risk
-    //   OVERLAY_CLS: 'overlay',              // overlay(backdrop) CSS class
-    //   MODAL_CLS: 'modal',                  // all modal blocks wrapper CSS class
-    //   MODAL_CONTENT_CLS: 'modal-content',  // modal window CSS class
-    //   INNER_CONTENT_CLS: 'modal-inner',    // inner content wrapper
-    //   SHOW_CLS: 'show',                    // `modal open` CSS class, here go your transitions
-    //   CLOSE_CLS: 'close'                   // `x` button CSS class
-    // });
     map.fire('modal', {
       content: '<h1>Modal header</h1>' + (new Array(100)).join('<p>Content line</p>')
     });
